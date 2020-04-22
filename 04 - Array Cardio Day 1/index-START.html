@@ -31,29 +31,90 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    Array.prototype.one = function() {
+      return this.filter((ele, i) => {
+        if (ele.year < 1600 && ele.year > 1499) return true;
+        return false;
+      });
+    }
+
+    // console.log(inventors.one());
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
 
+    Array.prototype.two = function() {
+      return this.map((ele, i) => {
+        return (ele.first + " " + ele.last);
+      });
+    }
+
+    // console.log(inventors.two());
+
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    Array.prototype.three = function() {
+      return this.sort((a, b) => {
+        return a.year - b.year;
+      });
+    }
+
+    // console.log(inventors.three());
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    Array.prototype.four = function() {
+      return this.reduce((acc, ele) => {
+        return acc + (ele.passed - ele.year);
+      }, 0);
+    }
+
+    // console.log(inventors.four());
 
     // 5. Sort the inventors by years lived
+    Array.prototype.five = function() {
+      return this.sort((a, b) => {
+        const first = a.passed - a.year;
+        const second = b.passed - b.year;
+        return second - first;
+      });
+    }
+
+    // console.log(inventors.five());
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    // const category = document.querySelector('.mw-category');
+    // const links = Array.from(category.querySelectorAll('a'));
+    // const bouleNames = links.map(link => link.textContent);
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    Array.prototype.seven = function() {
+      return this.sort((a, b) => {
+        const [alast, afirst] = a.split(', ');
+        const [blast, bfirst] = b.split(', ');
+        return alast - blast;
+      });
+    }
+
+    // console.log(people.seven());
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
+    Array.prototype.eight = function() {
+      return this.reduce((acc, ele) => {
+        if (acc[ele] === undefined) acc[ele] = 1;
+        else acc[ele]++;
+        return acc;
+      }, {});
+    }
+
+    console.log(data.eight());
   </script>
 </body>
 </html>
