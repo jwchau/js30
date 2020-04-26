@@ -14,19 +14,35 @@
   ctx.strokeStyle = '#BADA55';
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
+  ctx.lineWidth = 10;
+  ctx.globalCompositeOperation = 'luminosity';
 
+  let hue = 0;
+  let direction = true;
 
   let isDrawing = false;
   let lastX = lastY = 0;
 
   function draw(e) {
     if (!isDrawing) return;
+    ctx.strokeStyle = `hsl(${hue}, 100%, 75%)`;
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+    hue = (hue + 1) % 360;
 
-
+    if (direction) ctx.lineWidth += 0.1;
+    else ctx.lineWidth -= 0.1;
+    if (ctx.lineWidth <= 10 || ctx.lineWidth >= 100) direction = !direction;
   }
-  
+  canvas.addEventListener('mousedown', (e) => {
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+    isDrawing = true
+  });
+
   canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mousedown', () => isDrawing = true);
   canvas.addEventListener('mouseup', () => isDrawing = false);
   canvas.addEventListener('mouseout', () => isDrawing = false);
 
